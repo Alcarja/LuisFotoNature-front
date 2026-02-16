@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "*.nbg1.your-objectstorage.com",
+        hostname: "*.your-objectstorage.com",
       },
     ],
   },

@@ -128,16 +128,15 @@ body {
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
     @apply bg-background text-foreground;
   }
 }
 
-/* Tiptap Editor Enhancements */
-.ProseMirror {
+/* Editor & Content Styling */
+.ProseMirror,
+.prose-content {
   h1 {
     @apply text-4xl font-black tracking-tight mb-4 mt-6;
   }
@@ -158,6 +157,10 @@ body {
     @apply text-lg font-semibold mb-2 mt-3;
   }
 
+  p {
+    @apply text-base mb-4 leading-relaxed;
+  }
+
   blockquote {
     @apply border-l-4 border-zinc-400 pl-4 italic text-zinc-700 my-4;
   }
@@ -173,7 +176,8 @@ body {
     }
   }
 
-  ul, ol {
+  ul,
+  ol {
     @apply my-4 pl-6 list-outside;
   }
 

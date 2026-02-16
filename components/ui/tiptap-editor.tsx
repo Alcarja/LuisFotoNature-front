@@ -11,7 +11,7 @@ import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Color from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import imageCompression from "browser-image-compression";
 import { uploadImage } from "@/app/services/imageUpload";
@@ -28,7 +28,6 @@ import {
   Heading5,
   List,
   ListOrdered,
-  CheckSquare,
   Quote,
   Link as LinkIcon,
   Image as ImageIcon,
@@ -38,8 +37,6 @@ import {
   AlignCenter,
   AlignRight,
   Palette,
-  Copy,
-  Trash2,
 } from "lucide-react";
 
 interface TipTapEditorProps {
@@ -53,13 +50,11 @@ interface TipTapEditorProps {
 export function TipTapEditor({
   value,
   onChange,
-  placeholder = "Write your content...",
   className,
   postId,
 }: TipTapEditorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const linkInputRef = useRef<HTMLInputElement>(null);
-  const imageWidthInputRef = useRef<HTMLInputElement>(null);
 
   const editor = useEditor({
     extensions: [
@@ -140,7 +135,11 @@ export function TipTapEditor({
           const compressedFile = await imageCompression(file, options);
 
           // Upload to S3 using presigned URL
-          const imageUrl = await uploadImage(compressedFile, "post-body", postId);
+          const imageUrl = await uploadImage(
+            compressedFile,
+            "post-body",
+            postId,
+          );
 
           // Insert S3 URL into editor
           editor.chain().focus().setImage({ src: imageUrl }).run();
@@ -159,32 +158,6 @@ export function TipTapEditor({
     }
   };
 
-  const insertImageWithSize = (width: string) => {
-    const url = linkInputRef.current?.value || "";
-    if (url) {
-      editor
-        .chain()
-        .focus()
-        .setImage({
-          src: url,
-          alt: "Image",
-          title: "Image",
-        })
-        .run();
-      // Set width using HTML style
-      editor
-        .chain()
-        .focus()
-        .updateAttributes("image", {
-          style: `width: ${width}; height: auto; display: inline-block;`,
-        })
-        .run();
-      if (linkInputRef.current) {
-        linkInputRef.current.value = "";
-      }
-    }
-  };
-
   const handleAddLink = () => {
     const url = linkInputRef.current?.value || "";
     if (url) {
@@ -200,25 +173,15 @@ export function TipTapEditor({
     }
   };
 
-  const createImageContainer = (columns: number) => {
-    const colClass =
-      columns === 2
-        ? "grid-cols-2"
-        : columns === 3
-          ? "grid-cols-3"
-          : "grid-cols-1";
-    const html = `<div class="image-gallery-container grid ${colClass} gap-4 my-6 p-4 border-2 border-dashed border-zinc-300 rounded-lg bg-zinc-50 min-h-25 flex items-center justify-center">
-      <p class="col-span-full text-sm text-zinc-500 text-center">📷 Gallery container ready. Upload or paste images here</p>
-    </div>`;
-    editor.chain().focus().insertContent(html).run();
-  };
-
   return (
     <div
-      className={cn("border border-zinc-200 rounded-lg bg-white", className)}
+      className={cn(
+        "border border-zinc-200 rounded-lg bg-white flex flex-col max-h-200",
+        className,
+      )}
     >
       {/* Toolbar */}
-      <div className="border-b border-zinc-200 p-3 flex flex-wrap gap-1 bg-zinc-50">
+      <div className="sticky top-0 z-10 border-b border-zinc-200 p-3 flex flex-wrap gap-1 bg-zinc-50">
         {/* Text Formatting */}
         <div className="flex gap-1 border-r border-zinc-300 pr-2">
           <ToolbarButton
@@ -431,7 +394,9 @@ export function TipTapEditor({
       </div>
 
       {/* Editor Content */}
-      <EditorContent editor={editor} />
+      <div className="overflow-y-auto flex-1">
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
