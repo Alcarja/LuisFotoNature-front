@@ -70,7 +70,7 @@ export default function PostsPage() {
   const categories = [
     "Europa",
     "Asia",
-    "Australia",
+    "Oceanía",
     "América del Norte",
     "América del Sur",
     "África",

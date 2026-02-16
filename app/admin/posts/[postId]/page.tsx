@@ -284,7 +284,7 @@ export default function PostDetailPage() {
                             <option value="">Select a category</option>
                             <option value="Europa">Europa</option>
                             <option value="Asia">Asia</option>
-                            <option value="Australia">Australia</option>
+                            <option value="Oceanía">Oceanía</option>
                             <option value="América del Norte">
                               América del Norte
                             </option>

@@ -198,7 +198,9 @@ body {
   }
 
   img {
-    @apply cursor-pointer transition-all rounded-lg;
+    @apply cursor-pointer transition-all rounded-lg my-4 mx-auto block;
+    max-width: 100%;
+    height: auto;
     &:hover {
       @apply ring-2 ring-zinc-300;
     }
