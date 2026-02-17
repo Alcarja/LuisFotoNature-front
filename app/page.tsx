@@ -6,8 +6,8 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <main className="w-full bg-white">
-      <Hero />
-      <ImageShowcase />
+      {/*  <Hero />
+      <ImageShowcase /> */}
       <Newsletter />
       <Footer />
     </main>
