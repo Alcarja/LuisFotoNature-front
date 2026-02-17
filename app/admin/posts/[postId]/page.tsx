@@ -11,9 +11,16 @@ import {
   CheckCircle2,
   Circle,
   ImageOff,
+  Check,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useGetPostById } from "@/app/adapters/hooks";
+import {
+  useGetCommentsByPostId,
+  useGetPostById,
+  useUpdateComment,
+  useCreateComment,
+} from "@/app/adapters/hooks";
 import { updatePost } from "@/app/adapters/api";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -33,6 +40,7 @@ import { Switch } from "@/components/ui/switch";
 import { TipTapEditor } from "@/components/ui/tiptap-editor";
 import { findRemovedImageUrls } from "@/app/utils/imageTracking";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/app/context/AuthContext";
 
 interface PostFormData {
   featuredImage: string;
@@ -42,19 +50,122 @@ interface PostFormData {
   content: string;
 }
 
+interface Comment {
+  id: number;
+  postId: number;
+  email: string;
+  content: string;
+  approved: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export default function PostDetailPage() {
   const queryClient = useQueryClient();
+
+  const { user } = useAuth();
 
   const router = useRouter();
   const params = useParams();
   const postId = Number(params.postId);
 
   const { data: postResponse } = useGetPostById(postId);
+  const { data: commentsResponse } = useGetCommentsByPostId(postId);
+  const updateCommentMutation = useUpdateComment();
+  const createCommentMutation = useCreateComment();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
   const featuredImageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleApproveComment = (
+    commentId: number,
+    currentApprovalStatus: boolean,
+  ) => {
+    updateCommentMutation.mutate(
+      {
+        commentId,
+        approved: !currentApprovalStatus,
+      },
+      {
+        onSuccess: () => {
+          toast.success(
+            !currentApprovalStatus
+              ? "Comment approved!"
+              : "Comment unapproved!",
+          );
+          queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+        },
+        onError: (error) => {
+          toast.error(
+            error instanceof Error ? error.message : "Failed to update comment",
+          );
+        },
+      },
+    );
+  };
+
+  const handleCreateComment = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!commentContent.trim()) {
+      toast.error("Please fill in the comment field");
+      return;
+    }
+
+    if (!user?.email) {
+      toast.error("User email not found");
+      return;
+    }
+
+    createCommentMutation.mutate(
+      {
+        postId,
+        comment: commentContent,
+        email: user.email,
+      },
+      {
+        onSuccess: (response: Comment) => {
+          const createdCommentId = response?.id;
+          setCommentContent("");
+
+          // Auto-approve the comment
+          if (createdCommentId) {
+            updateCommentMutation.mutate(
+              {
+                commentId: createdCommentId,
+                approved: true,
+              },
+              {
+                onSuccess: () => {
+                  toast.success("Comment created and approved!");
+                  queryClient.invalidateQueries({
+                    queryKey: ["comments", postId],
+                  });
+                },
+                onError: () => {
+                  toast.success("Comment created (auto-approval pending)");
+                  queryClient.invalidateQueries({
+                    queryKey: ["comments", postId],
+                  });
+                },
+              },
+            );
+          } else {
+            toast.success("Comment created successfully!");
+            queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+          }
+        },
+        onError: (error) => {
+          toast.error(
+            error instanceof Error ? error.message : "Failed to create comment",
+          );
+        },
+      },
+    );
+  };
 
   const form = useForm({
     defaultValues: {
@@ -417,6 +528,126 @@ export default function PostDetailPage() {
                       __html: postResponse?.[0].content || "",
                     }}
                   />
+                </div>
+
+                {/* Comments Section */}
+                <div className="mt-12 pt-8 border-t border-zinc-200">
+                  <label className="block text-xs font-semibold text-zinc-600 uppercase mb-6">
+                    Comments ({commentsResponse?.length || 0})
+                  </label>
+
+                  {/* Create Comment Form */}
+                  <form
+                    onSubmit={handleCreateComment}
+                    className="mb-8 bg-zinc-50 rounded-lg p-4 border border-zinc-200"
+                  >
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-zinc-700 mb-2">
+                          Comment as {user?.email}
+                        </label>
+                        <textarea
+                          value={commentContent}
+                          onChange={(e) => setCommentContent(e.target.value)}
+                          placeholder="Write a comment..."
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none"
+                          rows={4}
+                          disabled={
+                            createCommentMutation.isPending ||
+                            updateCommentMutation.isPending
+                          }
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        disabled={
+                          createCommentMutation.isPending ||
+                          updateCommentMutation.isPending
+                        }
+                        className="w-full bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg py-2 font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {createCommentMutation.isPending
+                          ? "Creating..."
+                          : updateCommentMutation.isPending
+                            ? "Approving..."
+                            : "Create Comment"}
+                      </button>
+                    </div>
+                  </form>
+
+                  {commentsResponse && commentsResponse.length > 0 ? (
+                    <div className="space-y-4">
+                      {commentsResponse.map((comment: Comment) => (
+                        <div
+                          key={comment.id}
+                          className="bg-zinc-50 rounded-lg p-4 border border-zinc-200"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-2">
+                                <p className="font-semibold text-zinc-900">
+                                  {comment.email}
+                                </p>
+                                <time className="text-xs text-zinc-500">
+                                  {format(
+                                    new Date(comment.createdAt),
+                                    "MMM d, yyyy HH:mm",
+                                  )}
+                                </time>
+                              </div>
+                              <p className="text-sm text-zinc-700 leading-relaxed">
+                                {comment.content}
+                              </p>
+                            </div>
+                            <div className="shrink-0 flex items-center gap-2">
+                              <span
+                                className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
+                                  comment.approved
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-yellow-100 text-yellow-700"
+                                }`}
+                              >
+                                {comment.approved ? "Approved" : "Pending"}
+                              </span>
+                              <div className="flex gap-1">
+                                {comment.approved ? (
+                                  <button
+                                    onClick={() =>
+                                      handleApproveComment(
+                                        comment.id,
+                                        comment.approved,
+                                      )
+                                    }
+                                    disabled={updateCommentMutation.isPending}
+                                    className="p-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    title="Unapprove comment"
+                                  >
+                                    <X className="h-4 w-4" />
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() =>
+                                      handleApproveComment(
+                                        comment.id,
+                                        comment.approved,
+                                      )
+                                    }
+                                    disabled={updateCommentMutation.isPending}
+                                    className="p-1.5 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    title="Approve comment"
+                                  >
+                                    <Check className="h-4 w-4" />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-zinc-500">No comments yet.</p>
+                  )}
                 </div>
               </>
             )}

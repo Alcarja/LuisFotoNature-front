@@ -78,3 +78,44 @@ export const useUpdatePost = () => {
     }) => api.updatePost(postId, { postData, imageUrlsToDelete }),
   });
 };
+
+// COMMENTS
+export const useGetCommentsByPostId = (postId: number) => {
+  return useQuery({
+    queryKey: ["comments", postId],
+    queryFn: () => api.getCommentsByPostId(postId),
+  });
+};
+
+export const useGetApprovedCommentsByPostId = (postId: number) => {
+  return useQuery({
+    queryKey: ["approvedComments", postId],
+    queryFn: () => api.getApprovedCommentsByPostId(postId),
+  });
+};
+
+export const useCreateComment = () => {
+  return useMutation({
+    mutationFn: ({
+      postId,
+      comment,
+      email,
+    }: {
+      postId: number;
+      comment: string;
+      email: string;
+    }) => api.createComment(postId, { comment, email }),
+  });
+};
+
+export const useUpdateComment = () => {
+  return useMutation({
+    mutationFn: ({
+      commentId,
+      approved,
+    }: {
+      commentId: number;
+      approved: boolean;
+    }) => api.updateComment(commentId, { approved }),
+  });
+};

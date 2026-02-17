@@ -63,3 +63,29 @@ export const updatePost = async (
 ) => {
   return stpApi.put(`/api/posts/update-post/${postId}`, data);
 };
+
+// COMMENTS
+export const createComment = async (
+  postId: number,
+  data: { comment: string; email: string },
+) => {
+  return stpApi.post(`/api/comments/create-comment/${postId}`, { data });
+};
+
+export const getCommentsByPostId = async (postId: number) => {
+  return stpApi.get(`/api/comments/get-comments-by-post-id/${postId}`, {});
+};
+
+export const getApprovedCommentsByPostId = async (postId: number) => {
+  return stpApi.get(
+    `/api/comments/get-approved-comments-by-post-id/${postId}`,
+    {},
+  );
+};
+
+export const updateComment = async (
+  commentId: number,
+  data: { approved?: boolean },
+) => {
+  return stpApi.put(`/api/comments/update-comment/${commentId}`, data);
+};
