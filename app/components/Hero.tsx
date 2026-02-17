@@ -9,7 +9,6 @@ interface Post {
   title: string;
   featuredImage: string;
   category: string;
-  createdAt: string;
 }
 
 export default function Hero() {
@@ -17,7 +16,7 @@ export default function Hero() {
   const latestPost: Post | undefined = postsResponse?.[0];
 
   return (
-    <section className="relative w-full h-[85vh] overflow-hidden">
+    <section className="relative w-full h-screen overflow-hidden">
       {/* Background Image */}
       {latestPost?.featuredImage ? (
         <Image
@@ -28,35 +27,37 @@ export default function Hero() {
           priority
         />
       ) : (
-        <div className="w-full h-full bg-zinc-200" />
+        <div className="w-full h-full bg-zinc-100" />
       )}
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/30" />
 
       {/* Content */}
-      <div className="absolute inset-0 flex items-end">
-        <div className="max-w-5xl mx-auto w-full px-8 pb-20">
-          {latestPost ? (
-            <Link href={`/posts/${latestPost.id}`} className="group block">
-              <span className="inline-block text-xs font-medium tracking-[0.2em] text-white/70 uppercase mb-4">
-                {latestPost.category || "Latest"}
-              </span>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight max-w-3xl group-hover:text-white/90 transition-colors">
-                {latestPost.title}
-              </h1>
-            </Link>
-          ) : (
-            <>
-              <span className="inline-block text-xs font-medium tracking-[0.2em] text-white/70 uppercase mb-4">
-                Nature Photography
-              </span>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight max-w-3xl">
-                Moments Frozen in Time
-              </h1>
-            </>
-          )}
-        </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+        <span className="text-xs font-medium tracking-[0.3em] text-white/60 uppercase mb-6">
+          Nature Photography
+        </span>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[0.95]">
+          Luis Foto
+          <br />
+          Nature
+        </h1>
+        <p className="text-sm md:text-base text-white/60 mt-6 max-w-md leading-relaxed">
+          Capturing the raw beauty of wildlife and landscapes from the most remote corners of the world.
+        </p>
+        <Link
+          href="/posts"
+          className="mt-10 px-8 py-3 border border-white/30 text-white text-sm font-medium rounded-lg hover:bg-white/10 transition-all"
+        >
+          Explore Stories
+        </Link>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="text-[10px] tracking-[0.2em] text-white/40 uppercase">Scroll</span>
+        <div className="w-px h-8 bg-white/20" />
       </div>
     </section>
   );
