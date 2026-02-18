@@ -76,6 +76,10 @@ export const getCommentsByPostId = async (postId: number) => {
   return stpApi.get(`/api/comments/get-comments-by-post-id/${postId}`, {});
 };
 
+export const getAllComments = async () => {
+  return stpApi.get(`/api/comments/get-all-comments`, {});
+};
+
 export const getApprovedCommentsByPostId = async (postId: number) => {
   return stpApi.get(
     `/api/comments/get-approved-comments-by-post-id/${postId}`,

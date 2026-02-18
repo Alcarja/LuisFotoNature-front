@@ -87,6 +87,13 @@ export const useGetCommentsByPostId = (postId: number) => {
   });
 };
 
+export const useGetAllComments = () => {
+  return useQuery({
+    queryKey: ["allComments"],
+    queryFn: () => api.getAllComments(),
+  });
+};
+
 export const useGetApprovedCommentsByPostId = (postId: number) => {
   return useQuery({
     queryKey: ["approvedComments", postId],

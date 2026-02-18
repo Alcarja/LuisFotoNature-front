@@ -19,6 +19,7 @@ import {
   File,
   ChartNoAxesColumnIncreasing,
   PencilIcon,
+  MessageCircle,
 } from "lucide-react";
 
 type RoleConfig = {
@@ -38,6 +39,7 @@ const roleConfigs: Record<string, RoleConfig> = {
     menuItems: [
       { label: "Dashboard", href: "/admin", icon: BarChart3 },
       { label: "Posts", href: "/admin/posts", icon: PencilIcon },
+      { label: "Commentarios", href: "/admin/comments", icon: MessageCircle },
     ],
   },
 };
