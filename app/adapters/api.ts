@@ -93,3 +93,8 @@ export const updateComment = async (
 ) => {
   return stpApi.put(`/api/comments/update-comment/${commentId}`, data);
 };
+
+// BREVO
+export const subscribe = async (email: string) => {
+  return stpApi.post(`/api/emails/suscribe`, { email });
+};

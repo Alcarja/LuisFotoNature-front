@@ -126,3 +126,11 @@ export const useUpdateComment = () => {
     }) => api.updateComment(commentId, { approved }),
   });
 };
+
+// BREVO
+
+export const useSuscribe = () => {
+  return useMutation({
+    mutationFn: ({ email }: { email: string }) => api.subscribe(email),
+  });
+};
