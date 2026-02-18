@@ -57,12 +57,10 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded bg-zinc-900 group-hover:bg-zinc-800 transition">
-            <span className="text-sm font-black text-white">L</span>
-          </div>
-          <span className="text-lg font-black text-zinc-900 tracking-tight">
-            LUIS FOTO
-          </span>
+          <h1 className="text-lg font-black tracking-tighter leading-none">
+            <span className="text-zinc-900">Luis Foto</span>{" "}
+            <span className="text-zinc-400">Nature</span>
+          </h1>
         </Link>
 
         {/* Desktop Navigation */}
