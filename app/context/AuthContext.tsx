@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { LoginCredentials } from '@/types/auth';
-import type { User } from '@/types/user';
-import { login as loginApi, logout as logoutApi, getCurrentUser } from '@/app/adapters/api';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import type { LoginCredentials } from "@/types/auth";
+import type { User } from "@/types/user";
+import {
+  login as loginApi,
+  logout as logoutApi,
+  getCurrentUser,
+} from "@/app/adapters/api";
 
 interface AuthContextType {
   user: User | null;
@@ -24,14 +28,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-        if (token) {
-          const currentUser = await getCurrentUser();
-          setUser(currentUser);
-        }
+        // Instead of checking localStorage, just ask the server "Who am I?"
+        // The browser will automatically attach the httpOnly cookie
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
       } catch (error) {
-        // Token is invalid or expired, clear it
-        localStorage.removeItem('token');
         setUser(null);
       } finally {
         setIsLoading(false);
@@ -42,27 +43,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
-    const { token, user: userData } = await loginApi(credentials);
-    localStorage.setItem('token', token);
+    const { user: userData } = await loginApi(credentials);
     setUser(userData);
   };
 
   const logout = async () => {
-    try {
-      await logoutApi();
-    } finally {
-      localStorage.removeItem('token');
-      setUser(null);
-    }
+    await logoutApi(); // Server must clear the cookie
+    setUser(null);
   };
 
   const refreshUser = async () => {
     try {
+      // The browser automatically attaches the httpOnly cookie to this request
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
-      localStorage.removeItem('token');
+      // IMPORTANT: You cannot manually "removeItem" an httpOnly cookie.
+      // Instead, just clear your local React state.
       setUser(null);
+
+      // Optional: If your server hasn't already cleared the cookie via a 401 response,
+      // you might want to call your logout API here to be safe.
       throw error;
     }
   };
@@ -82,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
