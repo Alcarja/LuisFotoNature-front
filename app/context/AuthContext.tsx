@@ -26,15 +26,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // On mount: check token and fetch user
+  // On mount: ask the server "Who am I?" — the browser sends the httpOnly cookie automatically
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        // Instead of checking localStorage, just ask the server "Who am I?"
-        // The browser will automatically attach the httpOnly cookie
         const currentUser = await getCurrentUser();
         setUser(currentUser);
-      } catch (error) {
+      } catch {
         setUser(null);
       } finally {
         setIsLoading(false);
@@ -45,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
+    // Backend sets the httpOnly cookie via res.cookie() and returns { user }
     const { user: userData } = await loginApi(credentials);
     setUser(userData);
   };
@@ -57,24 +56,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setUser(null);
     queryClient.clear();
-    // Clean up any stale token from localStorage (legacy)
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("token");
-    }
   };
 
   const refreshUser = async () => {
     try {
-      // The browser automatically attaches the httpOnly cookie to this request
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
-      // IMPORTANT: You cannot manually "removeItem" an httpOnly cookie.
-      // Instead, just clear your local React state.
       setUser(null);
-
-      // Optional: If your server hasn't already cleared the cookie via a 401 response,
-      // you might want to call your logout API here to be safe.
       throw error;
     }
   };
