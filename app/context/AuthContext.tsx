@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import type { LoginCredentials } from "@/types/auth";
 import type { User } from "@/types/user";
 import {
@@ -21,6 +22,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,8 +50,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    await logoutApi(); // Server must clear the cookie
+    try {
+      await logoutApi();
+    } catch {
+      // Ignore errors (e.g. empty response body) — clear state regardless
+    }
     setUser(null);
+    queryClient.clear();
   };
 
   const refreshUser = async () => {
