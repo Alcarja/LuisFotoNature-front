@@ -57,6 +57,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setUser(null);
     queryClient.clear();
+    // Clean up any stale token from localStorage (legacy)
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+    }
   };
 
   const refreshUser = async () => {

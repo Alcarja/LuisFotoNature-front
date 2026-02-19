@@ -25,12 +25,6 @@ class StpApi {
       headers["Content-Type"] = "application/json";
     }
 
-    // Add token to Authorization header if available
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
-
     const options: RequestInit = {
       method,
       headers,
