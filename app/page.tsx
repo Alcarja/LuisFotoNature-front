@@ -2,7 +2,6 @@ import Hero from "./components/Hero";
 import ImageShowcase from "./components/ImageShowcase";
 import PhotoGrid from "./components/PhotoGrid";
 import Newsletter from "./components/Newsletter";
-import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -11,7 +10,6 @@ export default function Home() {
       <ImageShowcase />
       <PhotoGrid />
       <Newsletter />
-      <Footer />
     </main>
   );
 }

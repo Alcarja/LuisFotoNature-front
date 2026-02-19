@@ -8,12 +8,10 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded bg-zinc-900" />
-            <span className="font-black text-sm tracking-tight text-zinc-900">
-              LUIS FOTO
-            </span>
-          </Link>
+          <h1 className="text-lg font-black tracking-tighter leading-none">
+            <span className="text-zinc-900">Luis Foto</span>{" "}
+            <span className="text-zinc-400">Nature</span>
+          </h1>
 
           {/* Links */}
           <nav className="flex items-center gap-8">

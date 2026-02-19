@@ -9,4 +9,5 @@ export interface Post {
   createdAt: string | Date;
   updatedAt?: string | Date;
   active?: boolean;
+  campaignSent?: boolean;
 }

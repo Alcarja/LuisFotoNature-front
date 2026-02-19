@@ -3,7 +3,7 @@
 import Script from "next/script";
 
 const BREVO_FORM_URL =
-  "https://0cddd0eb.sibforms.com/serve/MUIFAKFWjgVUbvsv7x-tInNCkcJiq_fhzNe1xFe32HUX5yvj6665xWFafEJbKcmjliWx6Ly-MFEUIuG0oLooQDPUd6h_7VYxBy2BczTSnKXlxib6XpHaI3NUgoUDXawKNY7g-OZcWBIfuNPdaaS6H3N00SGNELvBOQCGuESDYvCIZOd4jbU5y5NdGakJuaU4FsHFKtQX-SCiqr_V";
+  "https://0cddd0eb.sibforms.com/serve/MUIFAIYaJ32Nf_drlxKNs020f59rS3TTXgbJTXtsTeq9eR1afIfk4IKAYIGEWTUIHE-GcetQUImOq7LjWYDYY8oULzRxAyhlwUuLCW7m1St6dIwqk94cyNRMTxu4pwEDrWyutU_SyPvthtp3NhelyaeGaKMdC094d0IEDQemFYqVcL-iCj0lz23hRfuSM5RF2zRSeF3sz7rxCLjH";
 
 export default function Newsletter() {
   return (
@@ -35,10 +35,10 @@ export default function Newsletter() {
           Newsletter
         </span>
         <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white mt-3 mb-4">
-          Stay Updated
+          Mantente al día
         </h2>
         <p className="text-sm text-white/50 mb-10 leading-relaxed">
-          New photo stories and collections delivered to your inbox.
+          Nuevas fotos e historias directamente en tu buzón.
         </p>
 
         {/* Brevo form — IDs must stay for their JS to work */}
@@ -85,7 +85,7 @@ export default function Newsletter() {
             >
               <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
                 <span className="sib-form-message-panel__inner-text">
-                  Thanks for subscribing!
+                  ¡Gracias por suscribirte!
                 </span>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function Newsletter() {
                           id="EMAIL"
                           name="EMAIL"
                           autoComplete="off"
-                          placeholder="your@email.com"
+                          placeholder="tu@email.com"
                           data-required="true"
                           required
                           style={{
@@ -171,7 +171,7 @@ export default function Newsletter() {
                     >
                       <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
                     </svg>
-                    Subscribe
+                    Suscribirme
                   </button>
                 </div>
 

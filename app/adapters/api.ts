@@ -95,6 +95,10 @@ export const updateComment = async (
 };
 
 // BREVO
-export const subscribe = async (email: string) => {
-  return stpApi.post(`/api/emails/suscribe`, { email });
+export const getAllSubscibers = async () => {
+  return stpApi.get(`/api/emails/get-all-subscribers`, {});
+};
+
+export const sendPostCampaignEmail = async (postId: number) => {
+  return stpApi.post(`/api/emails/send-post-campaign/${postId}`, {});
 };

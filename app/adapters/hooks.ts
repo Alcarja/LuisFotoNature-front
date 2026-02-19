@@ -128,9 +128,16 @@ export const useUpdateComment = () => {
 };
 
 // BREVO
-
-export const useSuscribe = () => {
+export const useSendPostCampaignEmail = () => {
   return useMutation({
-    mutationFn: ({ email }: { email: string }) => api.subscribe(email),
+    mutationFn: ({ postId }: { postId: number }) =>
+      api.sendPostCampaignEmail(postId),
+  });
+};
+
+export const useGetAllSubscribers = () => {
+  return useQuery({
+    queryKey: ["subscribers"],
+    queryFn: () => api.getAllSubscibers(),
   });
 };
