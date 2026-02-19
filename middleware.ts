@@ -7,17 +7,9 @@ export function middleware(request: NextRequest) {
 
   // 1. Log every request to /admin to see if the cookie is even arriving
   if (pathname.startsWith("/admin")) {
-    console.log("--- Middleware Security Check ---");
-    console.log("Path:", pathname);
-    console.log("Cookie 'token' present:", !!token);
-
     // 2. If token is missing, let's see what cookies ARE there
     if (!token) {
-      const allCookies = request.cookies.getAll();
-      console.log(
-        "Visible Cookies:",
-        allCookies.map((c) => c.name),
-      );
+      //const allCookies = request.cookies.getAll();
 
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("from", pathname);
