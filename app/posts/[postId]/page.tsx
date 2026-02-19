@@ -241,15 +241,6 @@ const IndicidualPostPage = () => {
           )}
         </div>
       </article>
-
-      {/* Footer */}
-      <footer className="border-t border-zinc-200 mt-20 py-12 bg-white">
-        <div className="max-w-5xl mx-auto px-8 text-center">
-          <p className="text-xs text-zinc-500">
-            © {new Date().getFullYear()} Luis Foto Nature
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
