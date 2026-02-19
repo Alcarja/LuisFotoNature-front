@@ -151,13 +151,12 @@ const IndicidualPostPage = () => {
         </header>
 
         {/* Article Body */}
-        <div className="prose-content max-w-none">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(post.content || ""),
-            }}
-          />
-        </div>
+        <div
+          className="prose-content max-w-none"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post.content || ""),
+          }}
+        />
 
         {/* Comments Section */}
         <div className="mt-16 pt-12 border-t border-zinc-200">

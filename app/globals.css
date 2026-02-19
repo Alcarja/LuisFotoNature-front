@@ -135,6 +135,7 @@ body {
 }
 
 /* Editor & Content Styling */
+@layer base {
 .ProseMirror,
 .prose-content {
   h1 {
@@ -205,6 +206,7 @@ body {
       @apply ring-2 ring-zinc-300;
     }
   }
+}
 }
 
 /* Image Gallery Containers */
