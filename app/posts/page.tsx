@@ -76,7 +76,7 @@ const PostsPage = () => {
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400" />
             <input
               type="text"
-              placeholder="Search posts by title..."
+              placeholder="Buscar posts por título..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-12 pr-4 py-3 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all"

@@ -2,7 +2,6 @@
 
 import {
   useGetPostById,
-  useGetCommentsByPostId,
   useCreateComment,
   useGetApprovedCommentsByPostId,
 } from "@/app/adapters/hooks";
@@ -13,6 +12,7 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import DOMPurify from "dompurify";
 
 interface Comment {
   id: number;
@@ -154,7 +154,7 @@ const IndicidualPostPage = () => {
         <div className="prose-content max-w-none">
           <div
             dangerouslySetInnerHTML={{
-              __html: post.content || "",
+              __html: DOMPurify.sanitize(post.content || ""),
             }}
           />
         </div>

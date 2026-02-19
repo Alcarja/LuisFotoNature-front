@@ -41,6 +41,7 @@ import { TipTapEditor } from "@/components/ui/tiptap-editor";
 import { findRemovedImageUrls } from "@/app/utils/imageTracking";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/app/context/AuthContext";
+import DOMPurify from "dompurify";
 
 interface PostFormData {
   featuredImage: string;
@@ -525,7 +526,9 @@ export default function PostDetailPage() {
                   <div
                     className="prose prose-zinc max-w-none"
                     dangerouslySetInnerHTML={{
-                      __html: postResponse?.[0].content || "",
+                      __html: DOMPurify.sanitize(
+                        postResponse?.[0].content || "",
+                      ),
                     }}
                   />
                 </div>
@@ -552,6 +555,7 @@ export default function PostDetailPage() {
                           placeholder="Write a comment..."
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none"
                           rows={4}
+                          maxLength={2000}
                           disabled={
                             createCommentMutation.isPending ||
                             updateCommentMutation.isPending
