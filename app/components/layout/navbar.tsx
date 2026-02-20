@@ -118,7 +118,7 @@ export function Navbar() {
                   <ChevronDown className="h-4 w-4 text-zinc-400" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 p-2">
+              <DropdownMenuContent align="end" className="w-64 p-2">
                 <DropdownMenuLabel className="px-2 py-3">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900">
