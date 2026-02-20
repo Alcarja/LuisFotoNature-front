@@ -38,13 +38,11 @@ export default function LoginPage() {
       <div className="w-full max-w-md pb-20">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded bg-zinc-900 mb-4">
-            <span className="text-lg font-black text-white">L</span>
-          </div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight mb-2">
-            LUIS FOTO NATURE
+          <h1 className="text-5xl font-black tracking-tighter leading-none">
+            <span className="text-zinc-900">Luis Foto</span>{" "}
+            <span className="text-zinc-400">Nature</span>
           </h1>
-          <p className="text-sm text-zinc-600">Login to your account</p>
+          <p className="text-sm text-zinc-600">Haz login con tu cuenta</p>
         </div>
 
         {/* Form */}
@@ -105,12 +103,12 @@ export default function LoginPage() {
             {isLoading ? (
               <>
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                Signing in...
+                Logging in...
               </>
             ) : (
               <>
                 <LogIn className="h-4 w-4" />
-                Sign In
+                Login
               </>
             )}
           </Button>

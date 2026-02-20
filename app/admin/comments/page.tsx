@@ -52,7 +52,9 @@ export default function CommentsPage() {
   const pageSize = 10;
 
   const [searchFilter, setSearchFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"" | "approved" | "pending">("");
+  const [statusFilter, setStatusFilter] = useState<"" | "approved" | "pending">(
+    "",
+  );
   const [postFilter, setPostFilter] = useState("");
   const [viewingComment, setViewingComment] = useState<Comment | null>(null);
 
@@ -60,7 +62,8 @@ export default function CommentsPage() {
   const updateCommentMutation = useUpdateComment();
 
   const postTitles = useMemo(() => {
-    const titles = (commentsResponse as Comment[])?.map((c) => c.postTitle) ?? [];
+    const titles =
+      (commentsResponse as Comment[])?.map((c) => c.postTitle) ?? [];
     return [...new Set(titles)].sort();
   }, [commentsResponse]);
 
@@ -261,9 +264,9 @@ export default function CommentsPage() {
       <div className="mx-auto max-w-325">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-black text-zinc-900">Commentarios</h1>
+          <h1 className="text-3xl font-black text-zinc-900">Comentarios</h1>
           <p className="text-sm text-zinc-500 mt-1">
-            Review and manage user comments
+            Consulta y gestiona los comentarios de los usuarios
           </p>
         </div>
 
@@ -271,7 +274,7 @@ export default function CommentsPage() {
         <div className="mb-5 flex flex-wrap items-end gap-3">
           <div className="flex-1 min-w-52">
             <label className="block text-xs font-semibold text-zinc-600 uppercase mb-1">
-              Search
+              Buscar
             </label>
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-400" />
@@ -423,11 +426,10 @@ export default function CommentsPage() {
                   <MessageCircle className="h-5 w-5 text-zinc-400" />
                 </div>
                 <h3 className="text-sm font-semibold text-zinc-900 mb-1">
-                  No comments yet
+                  No hay comentarios todavía.
                 </h3>
                 <p className="text-xs text-zinc-600">
-                  Comments will appear here once users start engaging with your
-                  posts
+                  Cuándo algún usuario deje un comentario aparecerá aquí.
                 </p>
               </div>
             </div>
@@ -442,7 +444,7 @@ export default function CommentsPage() {
           <DialogContent className="max-w-lg">
             <DialogHeader>
               <DialogTitle className="text-lg font-black text-zinc-900">
-                Comment Details
+                Detalles del comentario
               </DialogTitle>
             </DialogHeader>
             {viewingComment && (
@@ -471,7 +473,7 @@ export default function CommentsPage() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-zinc-500 uppercase mb-1">
-                    Comment
+                    Comentario
                   </p>
                   <p className="text-sm text-zinc-700 leading-relaxed whitespace-pre-wrap">
                     {viewingComment.content}
