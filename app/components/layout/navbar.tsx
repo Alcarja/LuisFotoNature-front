@@ -132,42 +132,9 @@ export function Navbar() {
                     </div>
                   </div>
                 </DropdownMenuLabel>
+
                 <DropdownMenuSeparator className="my-2" />
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/dashboard"
-                    className="cursor-pointer flex items-center gap-3 px-2 py-2.5 rounded-lg"
-                  >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100">
-                      <LayoutDashboard className="h-4 w-4 text-zinc-600" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-zinc-900">
-                        Dashboard
-                      </span>
-                      <span className="text-xs text-zinc-600">Admin panel</span>
-                    </div>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/settings"
-                    className="cursor-pointer flex items-center gap-3 px-2 py-2.5 rounded-lg"
-                  >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100">
-                      <Settings className="h-4 w-4 text-zinc-600" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-zinc-900">
-                        Settings
-                      </span>
-                      <span className="text-xs text-zinc-600">
-                        Account settings
-                      </span>
-                    </div>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="my-2" />
+
                 <DropdownMenuItem
                   onClick={handleLogout}
                   className="cursor-pointer flex items-center gap-3 px-2 py-2.5 rounded-lg text-red-600 focus:text-red-600 focus:bg-red-50"
