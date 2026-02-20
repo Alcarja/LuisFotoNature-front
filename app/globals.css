@@ -136,77 +136,81 @@ body {
 
 /* Editor & Content Styling */
 @layer base {
-.ProseMirror,
-.prose-content {
-  h1 {
-    @apply text-4xl font-black tracking-tight mb-4 mt-6;
-  }
+  .ProseMirror,
+  .prose-content {
+    h1 {
+      @apply text-4xl font-black tracking-tight mb-4 mt-6;
+    }
 
-  h2 {
-    @apply text-3xl font-bold tracking-tight mb-3 mt-5;
-  }
+    h2 {
+      @apply text-3xl font-bold tracking-tight mb-3 mt-5;
+    }
 
-  h3 {
-    @apply text-2xl font-bold mb-2 mt-4;
-  }
+    h3 {
+      @apply text-2xl font-bold mb-2 mt-4;
+    }
 
-  h4 {
-    @apply text-xl font-semibold mb-2 mt-3;
-  }
+    h4 {
+      @apply text-xl font-semibold mb-2 mt-3;
+    }
 
-  h5 {
-    @apply text-lg font-semibold mb-2 mt-3;
-  }
+    h5 {
+      @apply text-lg font-semibold mb-2 mt-3;
+    }
 
-  p {
-    @apply text-base mb-4 leading-relaxed;
-  }
+    p {
+      @apply text-base mb-4 leading-relaxed;
+      &:empty {
+        min-height: 0.8rem;
+      }
+    }
 
-  blockquote {
-    @apply border-l-4 border-zinc-400 pl-4 italic text-zinc-700 my-4;
-  }
+    blockquote {
+      @apply border-l-4 border-zinc-400 pl-4 italic text-zinc-700 my-4;
+    }
 
-  code {
-    @apply bg-zinc-100 rounded px-1.5 py-0.5 font-mono text-sm;
-  }
-
-  pre {
-    @apply bg-zinc-900 text-white rounded-lg p-4 overflow-x-auto my-4;
     code {
-      @apply bg-transparent text-white px-0 py-0;
+      @apply bg-zinc-100 rounded px-1.5 py-0.5 font-mono text-sm;
+    }
+
+    pre {
+      @apply bg-zinc-900 text-white rounded-lg p-4 overflow-x-auto my-4;
+      code {
+        @apply bg-transparent text-white px-0 py-0;
+      }
+    }
+
+    ul,
+    ol {
+      @apply my-4 pl-6 list-outside;
+    }
+
+    ul {
+      @apply list-disc;
+    }
+
+    ol {
+      @apply list-decimal;
+    }
+
+    li {
+      @apply mb-1;
+    }
+
+    a {
+      @apply text-blue-600 underline cursor-pointer hover:text-blue-800 transition-colors;
+    }
+
+    img {
+      @apply cursor-pointer transition-all rounded-lg my-4 mx-auto block;
+      max-width: 90% !important;
+      width: auto !important;
+      height: auto !important;
+      &:hover {
+        @apply ring-2 ring-zinc-300;
+      }
     }
   }
-
-  ul,
-  ol {
-    @apply my-4 pl-6 list-outside;
-  }
-
-  ul {
-    @apply list-disc;
-  }
-
-  ol {
-    @apply list-decimal;
-  }
-
-  li {
-    @apply mb-1;
-  }
-
-  a {
-    @apply text-blue-600 underline cursor-pointer hover:text-blue-800 transition-colors;
-  }
-
-  img {
-    @apply cursor-pointer transition-all rounded-lg my-4 mx-auto block;
-    max-width: 100%;
-    height: auto;
-    &:hover {
-      @apply ring-2 ring-zinc-300;
-    }
-  }
-}
 }
 
 /* Image Gallery Containers */
