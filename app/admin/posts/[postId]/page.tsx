@@ -524,7 +524,7 @@ export default function PostDetailPage() {
                     Content
                   </label>
                   <div
-                    className="prose prose-zinc max-w-none"
+                    className="prose-content max-w-none"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(
                         postResponse?.[0].content || "",

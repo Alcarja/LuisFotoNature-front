@@ -19,14 +19,18 @@ export interface UploadConfirmResponse {
 export async function uploadImage(
   file: File,
   context: "featured" | "post-body" = "post-body",
-  postId?: number
+  postId?: number,
+  galleryId?: number
 ): Promise<string> {
   try {
     // Step 1: Get presigned URL
     const presignResponse = await stpApi.post("/api/upload/presign", {
       filename: file.name,
       contentType: file.type,
+      context,
       postId,
+      galleryId,
+      path: galleryId ? `galleries/${galleryId}` : undefined,
     });
 
     const { presignedUrl, publicUrl } = presignResponse as PresignedUrlResponse;

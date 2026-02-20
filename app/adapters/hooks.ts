@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as api from "./api";
 import { LoginCredentials } from "@/types/auth";
@@ -139,5 +138,62 @@ export const useGetAllSubscribers = () => {
   return useQuery({
     queryKey: ["subscribers"],
     queryFn: () => api.getAllSubscibers(),
+  });
+};
+
+//GALLERIES
+export const useGetAllGalleries = () => {
+  return useQuery({
+    queryKey: ["allGalleries"],
+    queryFn: () => api.getAllGalleries(),
+  });
+};
+
+export const useCreateGallery = () => {
+  return useMutation({
+    mutationFn: (data: {
+      userId: number;
+      name: string;
+      continent: string;
+      place: string;
+    }) => api.createGallery(data),
+  });
+};
+
+export const useCreateGalleryImage = () => {
+  return useMutation({
+    mutationFn: (data: { galleryId: number; url: string }) =>
+      api.createGalleryImage(data),
+  });
+};
+
+export const useGetGalleryById = (galleryId: number) => {
+  return useQuery({
+    queryKey: ["gallery", galleryId],
+    queryFn: () => api.getGalleryById(galleryId),
+  });
+};
+
+export const useGetGalleryImagesByGalleryId = (galleryId: number) => {
+  return useQuery({
+    queryKey: ["galleryImages", galleryId],
+    queryFn: () => api.getGalleryImagesByGalleryId(galleryId),
+  });
+};
+
+export const useUpdateGallery = () => {
+  return useMutation({
+    mutationFn: ({
+      galleryId,
+      data,
+    }: {
+      galleryId: number;
+      data: {
+        name?: string;
+        continent?: string;
+        place?: string;
+        active?: boolean;
+      };
+    }) => api.updateGallery(galleryId, data),
   });
 };

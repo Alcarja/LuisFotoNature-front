@@ -21,6 +21,7 @@ import {
   PencilIcon,
   MessageCircle,
   MailIcon,
+  Images,
 } from "lucide-react";
 
 type RoleConfig = {
@@ -42,6 +43,7 @@ const roleConfigs: Record<string, RoleConfig> = {
       { label: "Posts", href: "/admin/posts", icon: PencilIcon },
       { label: "Comentarios", href: "/admin/comments", icon: MessageCircle },
       { label: "Emails", href: "/admin/emails", icon: MailIcon },
+      { label: "Galerías", href: "/admin/galleries", icon: Images },
     ],
   },
 };

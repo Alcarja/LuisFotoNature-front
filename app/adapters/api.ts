@@ -102,3 +102,47 @@ export const getAllSubscibers = async () => {
 export const sendPostCampaignEmail = async (postId: number) => {
   return stpApi.post(`/api/emails/send-post-campaign/${postId}`, {});
 };
+
+//GALLERIES
+export const getAllGalleries = async () => {
+  return stpApi.get(`/api/galleries/get-all-galleries`, {});
+};
+
+export const createGallery = async (data: {
+  userId: number;
+  name: string;
+  continent: string;
+  place: string;
+}) => {
+  return stpApi.post(`/api/galleries/create-gallery`, { data });
+};
+
+export const createGalleryImage = async (data: {
+  galleryId: number;
+  url: string;
+}) => {
+  return stpApi.post(`/api/galleries/create-gallery-image`, { data });
+};
+
+export const getGalleryById = async (galleryId: number) => {
+  return stpApi.get(`/api/galleries/get-gallery-by-id/${galleryId}`, {});
+};
+
+export const getGalleryImagesByGalleryId = async (galleryId: number) => {
+  return stpApi.get(
+    `/api/galleries/get-gallery-images-by-gallery-id/${galleryId}`,
+    {},
+  );
+};
+
+export const updateGallery = async (
+  galleryId: number,
+  data: {
+    name?: string;
+    continent?: string;
+    place?: string;
+    active?: boolean;
+  },
+) => {
+  return stpApi.put(`/api/galleries/update-gallery/${galleryId}`, { data });
+};
