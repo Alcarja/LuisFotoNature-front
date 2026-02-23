@@ -108,6 +108,10 @@ export const getAllGalleries = async () => {
   return stpApi.get(`/api/galleries/get-all-galleries`, {});
 };
 
+export const getAllActiveGalleries = async () => {
+  return stpApi.get(`/api/galleries/get-all-active-galleries`, {});
+};
+
 export const createGallery = async (data: {
   userId: number;
   name: string;

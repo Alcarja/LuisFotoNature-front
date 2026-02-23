@@ -15,8 +15,6 @@ import {
   LogIn,
   LogOut,
   User,
-  Settings,
-  LayoutDashboard,
   ChevronDown,
   Home,
   ClipboardList,
@@ -29,9 +27,9 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/app/hooks/useAuth";
 
 const allMenuItems = [
-  { label: "Home", href: "/", icon: Home },
+  { label: "Inicio", href: "/", icon: Home },
   { label: "Posts", href: "/posts", icon: CameraIcon },
-  { label: "Gallery", href: "/gallery", icon: ClipboardList },
+  { label: "Galerías", href: "/galleries", icon: ClipboardList },
 ];
 
 export function Navbar() {

@@ -149,6 +149,13 @@ export const useGetAllGalleries = () => {
   });
 };
 
+export const useGetAllActiveGalleries = () => {
+  return useQuery({
+    queryKey: ["allActiveGalleries"],
+    queryFn: () => api.getAllActiveGalleries(),
+  });
+};
+
 export const useCreateGallery = () => {
   return useMutation({
     mutationFn: (data: {
